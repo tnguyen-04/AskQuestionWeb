@@ -11,8 +11,6 @@ require_once '../phpmailer/SMTP.php';
 require_once '../config/commonFunctions.php';
 require_once '../config/databaseFunctions.php';
 
-
-
 $module = _MODULE;
 $action = _ACTION;
 

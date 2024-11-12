@@ -3,6 +3,16 @@ if (!defined('_authorizedAccess') || !_authorizedAccess) {
     die("Access denied");
 }
 layout("header", "Login");
+$error = "";
+if (isPostMethod()) {
+    $auth = new Authentication();
+    $login = $auth->login();
+    if ($login) {
+        header("location: ?module=User&action=home");
+    } else {
+        $error = getFlashData("error");
+    }
+}
 ?>
 <div class="bgCustom " style="min-width: 100vw;min-height:100vh">
     <div class=" container d-flex justify-content-center align-items-center vh-100">
@@ -20,6 +30,9 @@ layout("header", "Login");
                 <label class="form-label" for="form2Example2">Password</label>
                 <input type="password" name="password" class="form-control" />
             </div>
+            <?php if (!empty($error)) : ?>
+                <span style='color: red;'><?= $error ?></span><br>
+            <?php endif; ?>
 
             <!-- Forgot password  -->
             <div class="d-flex justify-content-end mb-4">
@@ -34,6 +47,7 @@ layout("header", "Login");
             </div>
         </form>
     </div>
+
 </div>
 <?php
 layout("footer");

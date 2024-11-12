@@ -5,10 +5,35 @@ if (!defined('_authorizedAccess') || !_authorizedAccess) {
 layout("header", "Register");
 if (isPostMethod()) {
     $authentication = new Authentication();
-    $error = $authentication->register();
+    $result = $authentication->register();
+    $error = $result['errors'];
+    $userInputArr = $result["userInputArr"];
     if (empty($error)) {
-        setFlashData("msg", "Registered successfully");
-        // header("location: ?module=Auth&action=login");   
+        $activeToken = sha1(uniqid() . time());
+
+        $data = [
+            "username" => $userInputArr['username'],
+            "email" => $userInputArr['email'],
+            "password" => password_hash($userInputArr['password'], PASSWORD_DEFAULT),
+            'activeToken' => $activeToken,
+            'role' => '2'
+        ];
+
+        $insert = insertData("users", $data);
+        if ($insert) {
+            $content = "<div style='text-align: center;'>
+                <h1 style='color:#ffc107; margin:0 auto 30px'>Hello {$userInputArr['username']}</h1>
+                <p style='margin:0 auto 30px'>We want to verify your account email, so click the button below to activate your account.</p>
+                <div style='display: inline-block; text-align: center;'>
+                    <a href='http://localhost/phpExercises/coursework/public/?module=Auth&action=activeToken&activeToken=$activeToken' style='display: inline-block; padding: 15px 30px; background-color: black; color: white; text-decoration: none; font-weight: bold; border-radius: 5px;'>Click here</a>
+                </div>
+            </div>";
+            $subject = "Active your accounts";
+            sendEmail($userInputArr['email'], $subject, $content);
+            setFlashData("msg", "Check your email to complete sign-in!");
+            setFlashData("validData", $userInputArr);
+        }
+        // header("location:?module=Auth&action=login");   
     } else {
         setFlashData("msg", "Please, check your data again");
         setFlashData("errors", $error);
@@ -17,7 +42,7 @@ if (isPostMethod()) {
 
 $msg = getFlashData("msg");
 $error = getFlashData("errors");
-
+$validData = getFlashData("validData");
 ?>
 <div class="bgCustom " style="min-width: 100vw;min-height:100vh">
     <div class="container d-flex justify-content-center align-items-center vh-100">
@@ -25,7 +50,7 @@ $error = getFlashData("errors");
             <h1 class="text-center mb-4">Register</h1>
 
             <?php if (!empty($msg)): ?>
-                <div class="alert" role="alert" style="background-color: <?= $msg === "Registered successfully" ? '#28a745' : '#f01435b3' ?>; color: white;">
+                <div class="alert" role="alert" style="background-color: <?= $msg === "Check your email to complete sign-in!" ? '#28a745' : '#f01435b3' ?>; color: white;">
                     <?= $msg; ?>
                 </div>
             <?php endif; ?>
@@ -33,14 +58,15 @@ $error = getFlashData("errors");
             <!-- Username  -->
             <div class="form-outline mb-3">
                 <label class="form-label" for="username">Username</label>
-                <input type="text" name="username" class="form-control" value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : '' ?>" required />
+                <input type="text" name="username" class="form-control" value="<?= isset($validData['username']) ? $validData['username'] : '' ?>" required />
+
                 <?php echo errorInput($error, "username"); ?>
 
             </div>
             <!-- email -->
             <div class="form-outline mb-3">
                 <label class="form-label" for="email">Email</label>
-                <input type="email" name="email" class="form-control" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" required />
+                <input type="email" name="email" class="form-control" value="<?= isset($validData['email']) ? $validData['email'] : '' ?>" required />
                 <?php errorInput($error, "email") ?>
             </div>
             <!-- create password -->

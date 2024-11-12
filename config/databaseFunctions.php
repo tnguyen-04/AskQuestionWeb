@@ -25,7 +25,8 @@ function insertData($tableName, $data)
     $fields = implode(",", $keys);
     $values = ":" . implode(",:", $keys);
     $sql = "INSERT INTO `$tableName` ($fields) VALUES ($values)";
-    query($sql, $data);
+    $result = query($sql, $data);
+    return $result;
 }
 
 function updateData($tableName, $data, $condition = "")
@@ -40,7 +41,8 @@ function updateData($tableName, $data, $condition = "")
     } else {
         $sql = "UPDATE `$tableName` SET $setString";
     }
-    query($sql, $data);
+    $result = query($sql, $data);
+    return $result;
 }
 
 function deleteData($tableName, $condition = "")
@@ -50,7 +52,8 @@ function deleteData($tableName, $condition = "")
     } else {
         $sql = "DELETE $tableName ";
     }
-    query($sql);
+    $result = query($sql);
+    return $result;
 }
 
 function selectRows($sql)

@@ -7,12 +7,18 @@ class AuthController
 
     public function login()
     {
+        require_once __DIR__ . '/../models/Auth.php';
         require_once __DIR__ . '/../views/auth/login.html.php';
     }
     public function register()
     {
         require_once __DIR__ . '/../models/Auth.php';
         require_once __DIR__ . '/../views/auth/register.html.php';
+    }
+    public function activeToken()
+    {
+        require_once __DIR__ . '/../models/Auth.php';
+        require_once __DIR__ . '/../views/auth/activeToken.html.php';
     }
     public function forgotPassword()
     {
