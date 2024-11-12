@@ -1,0 +1,65 @@
+.bgCustom {
+    background-image: url(../images/bgLogin.jpg);
+    background-size: cover;
+    background-position: left;
+    background-position: 10%;
+}
+.formCustom {
+    backdrop-filter: blur(5px);
+    background-color: #ffffff55;
+}
+li.navCommon {
+    position: relative;
+    color: #000;
+}
+
+li.navCommon::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+    height: 1px;
+    width: 0%;
+    background: white;
+    transition: width 0.5s;
+}
+li.navCommon:hover a {
+    color: #fff;
+    text-shadow: 0.5px 0 0 white;
+}
+
+li.navCommon:not(:has(a.nav-link.active)):hover::after {
+    width: 85%;
+}
+
+li.navCommon a.nav-link.active {
+    color: #fff;
+    text-shadow: 0.5px 0 0 white;
+}
+.more-link:hover {
+    text-decoration: underline;
+}
+
+/* coursework/
+├── app/
+│   ├── controllers/
+│   │   └── UserController.php
+│   ├── views/
+│   │   └── users/
+│   │       └── index.html.php
+│   │       └── askQuestion.html.php
+│   │       └── listAllPost.html.php
+└── config/
+    ├── config.php
+    └── databaseConnection.php
+    └── databaseFunctions.php
+    └── commonFunctions.php
+└── layouts/
+    └── header.html.php
+    └── footer.html.php
+└── public/
+    └── index.php
+    └── images
+    └── css/
+      └── style.css */
