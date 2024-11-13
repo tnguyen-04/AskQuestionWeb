@@ -22,14 +22,18 @@ class AuthController
     }
     public function forgotPassword()
     {
+        require_once __DIR__ . '/../models/Auth.php';
         require_once __DIR__ . '/../views/auth/forgotPassword.html.php';
     }
     public function createNewPassword()
     {
+        require_once __DIR__ . '/../models/Auth.php';
         require_once __DIR__ . '/../views/auth/createNewPassword.html.php';
     }
     public function logout()
     {
-        var_dump("logged out");
+        require_once __DIR__ . '/../models/Auth.php';
+        $auth = new Authentication();
+        $auth->logout();
     }
 }

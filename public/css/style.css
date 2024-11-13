@@ -45,11 +45,14 @@ li.navCommon a.nav-link.active {
 ├── app/
 │   ├── controllers/
 │   │   └── UserController.php
+│   │   └── AuthController.php
 │   ├── views/
 │   │   └── users/
 │   │       └── index.html.php
 │   │       └── askQuestion.html.php
 │   │       └── listAllPost.html.php
+│   ├── model/
+│   │   └── Contact.php
 └── config/
     ├── config.php
     └── databaseConnection.php

@@ -8,7 +8,7 @@ if (isPostMethod()) {
     $auth = new Authentication();
     $login = $auth->login();
     if ($login) {
-        header("location: ?module=User&action=home");
+        $auth->checkAccount();
     } else {
         $error = getFlashData("error");
     }

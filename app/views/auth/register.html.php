@@ -33,7 +33,6 @@ if (isPostMethod()) {
             setFlashData("msg", "Check your email to complete sign-in!");
             setFlashData("validData", $userInputArr);
         }
-        // header("location:?module=Auth&action=login");   
     } else {
         setFlashData("msg", "Please, check your data again");
         setFlashData("errors", $error);

@@ -33,45 +33,101 @@
             <i class="fa-regular fa-paper-plane" style="position: absolute; right: 10px; bottom: 10px; cursor: pointer;"></i>
         </div>
     </div>
+    <div class="border border-1 border-secondary overflow-hidden mb-4">
+        <!-- information -->
+        <div class="d-flex justify-content-between mt-3">
+            <p class="ms-3"><strong>Author's name</strong></p>
+            <div class="me-3">
+                <button type="button" data-bs-toggle="tooltip" data-bs-placement="center bottom" title="Edit post" style="all:unset">
+                    <i class="editPost fa-solid fa-user-pen me-2"></i>
+                </button>
+                <button type="button" update data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete post" style="all:unset">
+                    <i class="deletePost fa-regular fa-trash-can"></i>
+
+                </button>
+
+            </div>
+        </div>
+
+
+        <!-- content -->
+        <div class="boxContent mx-3">
+            <p class="text-content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur nesciunt commodi accusantium. Culpa alias, pariatur sit quod dicta temporibus ducimus deleniti rem eum qui earum cupiditate doloribus blanditiis, possimus facilis nesciunt quam excepturi? Magni non laboriosam facilis. Soluta esse accusantium deleniti optio molestias aut illo corrupti quam nostrum nisi laborum corporis tenetur modi ab nobis alias libero dolores, veritatis culpa!
+            </p>
+        </div>
+        <!-- images -->
+        <div>
+            <img class="d-block" src="<?= BASE_URL ?>/images/bgLogin.jpg" alt="" style="width: 420px; height: 400px;">
+        </div>
+
+        <!-- comment -->
+        <div class="textarea-container" style="position: relative; width: 100%; display: flex; align-items: center;">
+            <textarea class="commentPost d-block" placeholder="Comment here..." rows="1" style="resize: none; overflow: hidden; width: 100%; border: none;border-top: 1px solid rgb(108, 117, 125)"></textarea>
+            <i class="fa-regular fa-paper-plane" style="position: absolute; right: 10px; bottom: 10px; cursor: pointer;"></i>
+        </div>
+    </div>
+    <div class="border border-1 border-secondary overflow-hidden mb-4">
+        <!-- information -->
+        <div class="d-flex justify-content-between mt-3">
+            <p class="ms-3"><strong>Author's name</strong></p>
+            <div class="me-3">
+                <button type="button" data-bs-toggle="tooltip" data-bs-placement="center bottom" title="Edit post" style="all:unset">
+                    <i class="editPost fa-solid fa-user-pen me-2"></i>
+                </button>
+                <button type="button" update data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete post" style="all:unset">
+                    <i class="deletePost fa-regular fa-trash-can"></i>
+
+                </button>
+
+            </div>
+        </div>
+
+
+        <!-- content -->
+        <div class="boxContent mx-3">
+            <p class="text-content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur nesciunt commodi accusantium. Culpa alias, pariatur sit quod dicta temporibus ducimus deleniti rem eum qui earum cupiditate doloribus blanditiis, possimus facilis nesciunt quam excepturi? Magni non laboriosam facilis. Soluta esse accusantium deleniti optio molestias aut illo corrupti quam nostrum nisi laborum corporis tenetur modi ab nobis alias libero dolores, veritatis culpa!
+            </p>
+        </div>
+        <!-- images -->
+        <div>
+            <img class="d-block" src="<?= BASE_URL ?>/images/bgLogin.jpg" alt="" style="width: 420px; height: 400px;">
+        </div>
+
+        <!-- comment -->
+        <div class="textarea-container" style="position: relative; width: 100%; display: flex; align-items: center;">
+            <textarea class="commentPost d-block" placeholder="Comment here..." rows="1" style="resize: none; overflow: hidden; width: 100%; border: none;border-top: 1px solid rgb(108, 117, 125)"></textarea>
+            <i class="fa-regular fa-paper-plane" style="position: absolute; right: 10px; bottom: 10px; cursor: pointer;"></i>
+        </div>
+    </div>
 
     <!-- email -->
     <div class="emailAdmin position-fixed border border-2 border-dark rounded-circle d-flex justify-content-center align-items-center" style="bottom: 30px; right: 30px; height: 40px; width: 40px;">
         <i class="fa-regular fa-envelope fa-bounce fa-lg"></i>
     </div>
-    <div class="emailAdminDisplay position-fixed  " style="bottom:30px; right:30px; display:none">
+    <?php
+    $success = getFlashData("success");
+    $error = getFlashData("error");
+    ?>
+    <div class="emailAdminDisplay position-fixed " style="bottom:30px; right:30px; display:none">
         <label class="mb-2" for="sendEmail"><strong>Send email to admin</strong> </label>
 
         <div class=" ">
-            <form action="" class="d-flex align-item-end  ">
+            <form method="POST" action="?module=User&action=sendMailToAdmin" class="d-flex align-item-end  ">
 
-                <textarea class="emailContent me-3 border border-dark rounded p-4" name="emailContent" rows="1" cols="20" placeholder="type your comment" style="resize: none; overflow: hidden; width: 100%; border: none;border-top: 1px solid rgb(108, 117, 125)"></textarea>
-                <input id="sendEmail" class="btn btn-primary align-self-end " type="submit" value="Send mail">
+                <span class="me-3">
+                    <textarea class="emailContent  border border-dark rounded p-4 d-flex" name="emailContent" rows="1" cols="20" placeholder="type your comment" style="resize: none; overflow: hidden; width: 100%; border: none;border-top: 1px solid rgb(108, 117, 125)" required></textarea>
+                    <?= !empty($success) ? "<div class='text-success'>$success</div>" : null ?>
+                    <?= !empty($error) ? "<div class='text-danger'>$error</div>" : null ?>
+                </span>
+                <input class="btn btn-primary align-self-end " type="submit" value="Send mail">
+
             </form>
         </div>
     </div>
 
-    <!-- delete -->
-    <div class="popUpFormDelete" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9; opacity: 0; visibility: hidden;">
-        <form action="" class="border border-dark rounded py-2" style="width: 380px; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; ">
-            <div>
-                <div class="popUpHeader d-flex align-items-center">
-                    <h5 class="modal-title ms-4 ">Do you want to delete the post?</h5>
-                    <button type="button" class="popUpClose ms-4 " style="all:unset; scale:1.5; cursor:pointer">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                <hr>
-                <div class="popUpBody ms-4">
-                    <p>This post will be deleted permanently</p>
-                </div>
-                <hr>
-                <div class="popUpFooter d-flex justify-content-end gap-3 me-3">
-                    <button type="button" class="popUpCancel btn btn-secondary">Cancel</button>
-                    <input type="submit" class="btn btn-danger" value="Delete">
-                </div>
-            </div>
-        </form>
-    </div>
+
     <!-- edit -->
     <div class="popUpFormEdit" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9;opacity: 0; visibility: hidden">
         <form class="p-3 border border-secondary" style="position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff;max-width:420px; border-radius: 15px;">
@@ -130,15 +186,13 @@
 
 </div>
 <script>
-    let deletePost = document.querySelectorAll('.deletePost')
     let editPost = document.querySelectorAll('.editPost');
     let emailAdmin = document.querySelector('.emailAdmin');
     let emailAdminDisplay = document.querySelector('.emailAdminDisplay');
 
-    let popUpFormDelete = document.querySelector('.popUpFormDelete')
     let popUpFormEdit = document.querySelector('.popUpFormEdit')
     let cancelEdit = document.querySelectorAll('.cancelEdit');
-    let closeDelete = document.querySelectorAll('.popUpClose, .popUpCancel');
+
 
     emailAdmin.addEventListener("click", (event) => {
         emailAdmin.style.visibility = "hidden";
@@ -157,20 +211,9 @@
         }
     });
 
-    deletePost.forEach(post => {
-        post.addEventListener("click", () => {
-            popUpFormDelete.style.opacity = "1";
-            popUpFormDelete.style.visibility = "visible";
-            popUpFormDelete.style.transition = ".25s";
-            document.body.style.overflowY = "scroll";
-            document.body.style.width = "100%";
 
-        });
-    });
     editPost.forEach(post => {
         post.addEventListener("click", () => {
-            console.log("clsvnlwsn")
-
             popUpFormEdit.style.opacity = "1";
             popUpFormEdit.style.visibility = "visible";
             popUpFormEdit.style.transition = ".25s";
@@ -180,14 +223,7 @@
     });
 
 
-    closeDelete.forEach(button => {
-        button.addEventListener("click", () => {
-            popUpFormDelete.style.opacity = "0"
-            popUpFormDelete.style.visibility = "hidden"
-            document.body.style.overflow = "auto"
 
-        });
-    });
     cancelEdit.forEach(button => {
         button.addEventListener("click", () => {
             popUpFormEdit.style.opacity = "0"

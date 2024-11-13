@@ -19,7 +19,7 @@ function seeMore($textContent, $boxContentByClass)
 {
     echo "<script>
        document.addEventListener('DOMContentLoaded', function() {
-           // Sử dụng biến PHP để truyền giá trị đúng
+
            let contents = document.querySelectorAll('.' + '$textContent');
            let boxContents = document.querySelectorAll('.' + '$boxContentByClass'); // Sửa đây
        
@@ -34,16 +34,14 @@ function seeMore($textContent, $boxContentByClass)
                    '<span class=\"more-content\" style=\"display: none;\">' + restOfText + '</span>' +
                    '<span id=\"moreLink\" class=\"more-link\" style=\"color: #1895ef; cursor: pointer; word-break: break-word;\"> See more</span>';
        
-               // Lắng nghe sự kiện click trên các boxContents
                boxContents.forEach(boxContent => {
                    let moreLink = boxContent.querySelector('#moreLink'); // Sửa đây
-                   if (moreLink) {  // Kiểm tra nếu moreLink tồn tại
+                   if (moreLink) {  
                        boxContent.addEventListener('click', function() {
                            console.log('clicked');
                            let moreContent = content.querySelector('.more-content');
                            let dots = document.getElementById('dots');
        
-                           // Điều chỉnh hiển thị của các phần tử khi click
                            if (moreContent.style.display === 'none') {
                                moreContent.style.display = 'inline';
                                dots.style.display = 'none';
@@ -74,13 +72,102 @@ function autoResizeTextArea($textareaClass)
         });
     </script>";
 }
-function setSession($key, $value)
+function confirmForm($type, $title, $content, $buttonValue, $redirect)
 {
-    return $_SESSION[$key] = $value;
+    echo "
+    <div class=\"$type popUpFormDelete\" style=\"position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9; opacity: 0; visibility: hidden;\">
+        <form class=\"border border-dark rounded py-2\" style=\"width: 380px; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff;\" action=\"$redirect\" method=\"POST\">
+            <div>
+                <div class=\"popUpHeader d-flex align-items-center justify-content-between\">
+                    <h5 class=\"modal-title ms-4\">$title</h5>
+                    <button type=\"button\" class=\"popUpClose me-4\" style=\"all: unset; scale: 1.5; cursor: pointer;\">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <hr>
+                <div class=\"popUpBody ms-4\">
+                    <p>$content</p>
+                </div>
+                <hr>
+                <div class=\"popUpFooter d-flex justify-content-end align-items-center gap-3 me-3\">
+                    <button type=\"button\" class=\"popUpCancel btn btn-secondary\">Cancel</button>
+                    <button type=\"submit\" class=\"btn btn-danger\" value=\"$buttonValue\">$buttonValue</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    ";
+}
+
+function handleDeleteConfirmForm()
+{
+    echo "
+    <script>
+        let deletePost = document.querySelectorAll('.deletePost');
+        let popUpFormDelete = document.querySelector('.deleteConfirm');
+        let closeDelete = document.querySelectorAll('.popUpClose, .popUpCancel');
+     
+
+        deletePost.forEach(post => {
+            post.addEventListener('click', () => {
+                popUpFormDelete.style.opacity = '1';
+                popUpFormDelete.style.visibility = 'visible';
+                popUpFormDelete.style.transition = '.25s';
+                document.body.style.overflowY = 'scroll';
+                document.body.style.width = '100%';
+            });
+        });
+
+        closeDelete.forEach(button => {
+            button.addEventListener('click', () => {
+                popUpFormDelete.style.opacity = '0';
+                popUpFormDelete.style.visibility = 'hidden';
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+    </script>
+    ";
+}
+function handleLogoutConfirmForm()
+{
+    echo "
+    <script>
+            let logoutButtons = document.querySelectorAll('.logout');
+            let popUpFormLogout = document.querySelector('.logoutForm');
+            let closeButtons = document.querySelectorAll('.popUpClose, .popUpCancel');
+         
+            // Show confirmation form on 'Log Out' button click
+            logoutButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault(); 
+                    popUpFormLogout.style.opacity = '1';
+                    popUpFormLogout.style.visibility = 'visible';
+                    popUpFormLogout.style.transition = 'opacity 0.25s ease';
+                    document.body.style.overflowY = 'scroll';
+                    document.body.style.width = '100%';
+                });
+            });
+
+            // Hide confirmation form on close button click
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    popUpFormLogout.style.opacity = '0';
+                    popUpFormLogout.style.visibility = 'hidden';
+                    document.body.style.overflow = 'auto';
+                });
+            });
+    </script>
+    ";
 }
 
 
 
+
+function setSession($key, $value)
+{
+    return $_SESSION[$key] = $value;
+}
 function getSession($key = "")
 {
     if (empty($key)) {
@@ -203,10 +290,13 @@ function sendEmail($to, $subject, $content)
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = $subject;
         $mail->Body    = $content;
+        $mail->CharSet = 'UTF-8';
 
         $mail->send();
+        return true;
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return false;
     }
 }
 
