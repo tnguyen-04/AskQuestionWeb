@@ -57,7 +57,7 @@ $validData = getFlashData("validData");
             <!-- Username  -->
             <div class="form-outline mb-3">
                 <label class="form-label" for="username">Username</label>
-                <input type="text" name="username" class="form-control" value="<?= isset($validData['username']) ? $validData['username'] : '' ?>" required />
+                <input type="text" name="username" class="form-control" value="<?= !empty($validData['username']) ? $validData['username'] : '' ?>" required />
 
                 <?php echo errorInput($error, "username"); ?>
 
@@ -65,7 +65,7 @@ $validData = getFlashData("validData");
             <!-- email -->
             <div class="form-outline mb-3">
                 <label class="form-label" for="email">Email</label>
-                <input type="email" name="email" class="form-control" value="<?= isset($validData['email']) ? $validData['email'] : '' ?>" required />
+                <input type="email" name="email" class="form-control" value="<?= !empty($validData['email']) ? $validData['email'] : '' ?>" required />
                 <?php errorInput($error, "email") ?>
             </div>
             <!-- create password -->

@@ -111,7 +111,9 @@
     $error = getFlashData("error");
     ?>
     <div class="emailAdminDisplay position-fixed " style="bottom:30px; right:30px; display:none">
-        <label class="mb-2" for="sendEmail"><strong>Send email to admin</strong> </label>
+        <label class="mb-2" for="sendEmail"><strong>Send email to admin
+                lorem*50
+            </strong> </label>
 
         <div class=" ">
             <form method="POST" action="?module=User&action=sendMailToAdmin" class="d-flex align-item-end  ">

@@ -16,23 +16,32 @@ class UserController
     public function askQuestion()
     {
         require_once __DIR__ . '/../models/Auth.php';
-        ob_start();
-        require_once __DIR__ . '/../views/users/askQuestion.html.php';
-        $output = ob_get_clean();
+        require_once __DIR__ . '/../models/User.php';
         $title = "Ask question";
+        ob_start();
         require_once __DIR__ . '/../views/users/home.html.php';
+        require __DIR__ . '/../views/users/askQuestion.html.php';
+        $output = ob_get_clean();
+        require __DIR__ . '/../views/users/home.html.php';
     }
     public function sendMailToAdmin()
     {
+
         require_once __DIR__ . '/../models/Auth.php';
         require_once __DIR__ . '/../models/Contact.php';
-        $sendMail = sendMailToAdmin();
+        header("location: ?module=User&action=home");
+        require __DIR__ . '/../views/users/home.html.php';
+
+        $subject = "This email from $username user";
+        $emailContent = filterUserInput()["emailContent"];
+
+        //$email from  require __DIR__ . '/../views/users/home.html.php';
+        $sendMail = sendMailToAdmin($email, $subject, $emailContent);
 
         if ($sendMail) {
             setFlashData("success", "Email has sent successfully");
         } else {
             setFlashData("error", "Can not send the email, please try again!");
         }
-        header("location: ?module=User&action=home");
     }
 }

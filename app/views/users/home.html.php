@@ -4,9 +4,14 @@ if (!defined('_authorizedAccess') || !_authorizedAccess) {
 }
 
 layout("header", $title);
+$username = "";
+$email = "";
 $auth = new Authentication();
-$isLoggedIn =   $auth->checkLogin();
-
+$isLogged = $auth->checkLogin();
+if ($isLogged) {
+    $username = $isLogged['username'];
+    $email = $isLogged['email'];
+}
 ?>
 
 <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #e3b142;">
@@ -43,7 +48,6 @@ $isLoggedIn =   $auth->checkLogin();
 </nav>
 
 <main>
-
     <?= isset($output) ? $output : null; ?>
 </main>
 

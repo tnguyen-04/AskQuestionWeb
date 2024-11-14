@@ -121,31 +121,37 @@ class Authentication
 
     function checkAccount()
     {
-        if (getSession("loginToken")) {
+        if (!empty(getSession("loginToken"))) {
             $loginToken = getSession("loginToken");
             $sql = "SELECT users.id, users.role
-                FROM users
-                INNER JOIN sessions ON users.id = sessions.user_id
-                WHERE sessions.loginToken = '$loginToken' ";
+                   FROM users
+                   INNER JOIN sessions ON users.id = sessions.user_id
+                   WHERE sessions.loginToken = '$loginToken'";
             $checkToken = selectOneRow($sql);
 
-            if ($checkToken && $checkToken['role'] === 1) {
-                header("location: ?module=Admin&action=user");
-            } elseif ($checkToken && $checkToken['role'] === 2) {
-                header("location: ?module=User&action=home");
+            if ($checkToken) {
+                if ($checkToken['role'] === 1) {
+                    header("location: ?module=Admin&action=user");
+                    exit();
+                } elseif ($checkToken['role'] === 2) {
+                    header("location: ?module=User&action=home");
+                    exit();
+                }
             } else {
                 deleteSession("loginToken");
                 header("location: ?module=Auth&action=login");
+                exit();
             }
         } else {
             header("location: ?module=Auth&action=login");
+            exit();
         }
     }
     function checkLogin()
     {
         if (getSession("loginToken")) {
             $loginToken = getSession("loginToken");
-            $sql = "SELECT users.id
+            $sql = "SELECT users.id, users.username, users.email
                 FROM users
                 INNER JOIN sessions ON users.id = sessions.user_id
                 WHERE sessions.loginToken = '$loginToken' ";
@@ -154,7 +160,7 @@ class Authentication
             if (!$checkToken) {
                 header("location: ?module=Auth&action=login");
             } else {
-                return true;
+                return $checkToken;
             }
         } else {
             header("location: ?module=Auth&action=login");

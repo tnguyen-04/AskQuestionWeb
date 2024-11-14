@@ -4,8 +4,12 @@ if (!defined('_authorizedAccess') || !_authorizedAccess) {
 }
 layout("header", "Login");
 $error = "";
+$auth = new Authentication();
+if (getSession("loginToken")) {
+    $auth->checkAccount();
+}
+
 if (isPostMethod()) {
-    $auth = new Authentication();
     $login = $auth->login();
     if ($login) {
         $auth->checkAccount();

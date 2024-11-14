@@ -175,6 +175,8 @@ function getSession($key = "")
     } else {
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
+        } else {
+            return false;
         }
     }
 }
