@@ -9,7 +9,7 @@ $auth->checkLogin();
 
 <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #e3b142;">
     <div class="container-fluid">
-        <a class="navbar-brand mx-auto d-block d-lg-inline ms-5" href="?module=User&action=home">HeyQuestion</a>
+        <a class="navbar-brand mx-auto d-block d-lg-inline ms-5" href="?module=Admin&action=user">HeyQuestion</a>
 
         <div class="collapse navbar-collapse d-lg-flex justify-content-left align-items-center" id="navbarContent">
             <ul class="navbar-nav ms-auto">

@@ -4,8 +4,8 @@ if (!defined('_authorizedAccess') || !_authorizedAccess) {
     die("Access denied");
 }
 
-$userAction = new User();
-$modules = $userAction->getModules();
+$module = new Module();
+$modules = $module->getModules();
 ?>
 
 <div class="container d-flex justify-content-center" style="margin: 140px 185px 100px;">
@@ -18,7 +18,7 @@ $modules = $userAction->getModules();
         <textarea class="contentPost" rows="1" cols="50" placeholder="Type your question here" style="resize: none; overflow: hidden; width: 100%; border: none; border-bottom: 1px solid rgb(108, 117, 125)"></textarea>
 
         <div class="">
-            <select name="module" class="form-select my-3">
+            <select name="modules" class="form-select my-3">
                 <option selected>Select a language</option>
                 <?php foreach ($modules as $module): ?>
                     <option value="<?= htmlspecialchars($module['id'], ENT_QUOTES, "UTF-8"); ?>">

@@ -1,15 +1,24 @@
+<?php
+
+if (!defined('_authorizedAccess') || !_authorizedAccess) {
+    die("Access denied");
+}
+
+$getModule = new Module();
+$modules = $getModule->getModules();
+?>
+
 <div class="content" style="width: 420px; margin: 100px auto 60px;">
     <div class="border border-1 border-secondary overflow-hidden mb-4">
         <!-- information -->
         <div class="d-flex justify-content-between mt-3">
-            <p class="ms-3"><strong>Author's name</strong></p>
+            <p class="ms-3"><strong><?= $username ?></strong></p>
             <div class="me-3">
                 <button type="button" data-bs-toggle="tooltip" data-bs-placement="center bottom" title="Edit post" style="all:unset">
                     <i class="editPost fa-solid fa-user-pen me-2"></i>
                 </button>
                 <button type="button" update data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete post" style="all:unset">
                     <i class="deletePost fa-regular fa-trash-can"></i>
-
                 </button>
 
             </div>
@@ -17,7 +26,7 @@
 
 
         <!-- content -->
-        <div class="boxContent mx-3">
+        <div class="ContentPost mx-3">
             <p class="text-content">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur nesciunt commodi accusantium. Culpa alias, pariatur sit quod dicta temporibus ducimus deleniti rem eum qui earum cupiditate doloribus blanditiis, possimus facilis nesciunt quam excepturi? Magni non laboriosam facilis. Soluta esse accusantium deleniti optio molestias aut illo corrupti quam nostrum nisi laborum corporis tenetur modi ab nobis alias libero dolores, veritatis culpa!
             </p>
@@ -36,14 +45,13 @@
     <div class="border border-1 border-secondary overflow-hidden mb-4">
         <!-- information -->
         <div class="d-flex justify-content-between mt-3">
-            <p class="ms-3"><strong>Author's name</strong></p>
+            <p class="ms-3"><strong><?= $username ?></strong></p>
             <div class="me-3">
                 <button type="button" data-bs-toggle="tooltip" data-bs-placement="center bottom" title="Edit post" style="all:unset">
                     <i class="editPost fa-solid fa-user-pen me-2"></i>
                 </button>
                 <button type="button" update data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete post" style="all:unset">
                     <i class="deletePost fa-regular fa-trash-can"></i>
-
                 </button>
 
             </div>
@@ -51,9 +59,9 @@
 
 
         <!-- content -->
-        <div class="boxContent mx-3">
+        <div class="ContentPost mx-3">
             <p class="text-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur nesciunt commodi accusantium. Culpa alias, pariatur sit quod dicta temporibus ducimus deleniti rem eum qui earum cupiditate doloribus blanditiis, possimus facilis nesciunt quam excepturi? Magni non laboriosam facilis. Soluta esse accusantium deleniti optio molestias aut illo corrupti quam nostrum nisi laborum corporis tenetur modi ab nobis alias libero dolores, veritatis culpa!
+                SGWEGFWEGF Ừ FWEFIU WIUEF WGIU
             </p>
         </div>
         <!-- images -->
@@ -67,40 +75,8 @@
             <i class="fa-regular fa-paper-plane" style="position: absolute; right: 10px; bottom: 10px; cursor: pointer;"></i>
         </div>
     </div>
-    <div class="border border-1 border-secondary overflow-hidden mb-4">
-        <!-- information -->
-        <div class="d-flex justify-content-between mt-3">
-            <p class="ms-3"><strong>Author's name</strong></p>
-            <div class="me-3">
-                <button type="button" data-bs-toggle="tooltip" data-bs-placement="center bottom" title="Edit post" style="all:unset">
-                    <i class="editPost fa-solid fa-user-pen me-2"></i>
-                </button>
-                <button type="button" update data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete post" style="all:unset">
-                    <i class="deletePost fa-regular fa-trash-can"></i>
-
-                </button>
-
-            </div>
-        </div>
 
 
-        <!-- content -->
-        <div class="boxContent mx-3">
-            <p class="text-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur nesciunt commodi accusantium. Culpa alias, pariatur sit quod dicta temporibus ducimus deleniti rem eum qui earum cupiditate doloribus blanditiis, possimus facilis nesciunt quam excepturi? Magni non laboriosam facilis. Soluta esse accusantium deleniti optio molestias aut illo corrupti quam nostrum nisi laborum corporis tenetur modi ab nobis alias libero dolores, veritatis culpa!
-            </p>
-        </div>
-        <!-- images -->
-        <div>
-            <img class="d-block" src="<?= BASE_URL ?>/images/bgLogin.jpg" alt="" style="width: 420px; height: 400px;">
-        </div>
-
-        <!-- comment -->
-        <div class="textarea-container" style="position: relative; width: 100%; display: flex; align-items: center;">
-            <textarea class="commentPost d-block" placeholder="Comment here..." rows="1" style="resize: none; overflow: hidden; width: 100%; border: none;border-top: 1px solid rgb(108, 117, 125)"></textarea>
-            <i class="fa-regular fa-paper-plane" style="position: absolute; right: 10px; bottom: 10px; cursor: pointer;"></i>
-        </div>
-    </div>
 
     <!-- email -->
     <div class="emailAdmin position-fixed border border-2 border-dark rounded-circle d-flex justify-content-center align-items-center" style="bottom: 30px; right: 30px; height: 40px; width: 40px;">
@@ -110,16 +86,15 @@
     $success = getFlashData("success");
     $error = getFlashData("error");
     ?>
-    <div class="emailAdminDisplay position-fixed " style="bottom:30px; right:30px; display:none">
+    <div class="emailAdminDisplay position-fixed " style="z-index:11;bottom:30px; right:30px; display:none">
         <label class="mb-2" for="sendEmail"><strong>Send email to admin
-                lorem*50
             </strong> </label>
 
-        <div class=" ">
+        <div>
             <form method="POST" action="?module=User&action=sendMailToAdmin" class="d-flex align-item-end  ">
 
                 <span class="me-3">
-                    <textarea class="emailContent  border border-dark rounded p-4 d-flex" name="emailContent" rows="1" cols="20" placeholder="type your comment" style="resize: none; overflow: hidden; width: 100%; border: none;border-top: 1px solid rgb(108, 117, 125)" required></textarea>
+                    <textarea class="emailContent  border border-dark rounded p-4 d-flex" name="emailContent" rows="3" cols="35" placeholder="type your comment" style="resize: none; overflow: hidden; width: 100%; border: none;border-top: 1px solid rgb(108, 117, 125)" required></textarea>
                     <?= !empty($success) ? "<div class='text-success'>$success</div>" : null ?>
                     <?= !empty($error) ? "<div class='text-danger'>$error</div>" : null ?>
                 </span>
@@ -140,18 +115,13 @@
             <textarea id="editContent" cols="50" placeholder="Type your question here" style="resize: none; border:none; border-bottom: 1px solid rgb(108, 117, 125);"></textarea>
 
             <div class="">
-                <select class="form-select my-3">
+                <select name="modules" class="form-select my-3">
                     <option selected>Select a language</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                    <option value="4">Four</option>
-                    <option value="5">Five</option>
-                    <option value="6">Six</option>
-                    <option value="7">Seven</option>
-                    <option value="8">Eight</option>
-                    <option value="9">Nine</option>
-                    <option value="10">Ten</option>
+                    <?php foreach ($modules as $module): ?>
+                        <option value="<?= htmlspecialchars($module['id'], ENT_QUOTES, "UTF-8"); ?>">
+                            <?= htmlspecialchars($module['name'], ENT_QUOTES, "UTF-8"); ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
 
                 <label for="choosePicture">
@@ -168,7 +138,7 @@
         </form>
     </div>
     <!-- pagination -->
-    <nav class="d-flex justify-content-center">
+    <nav class="d-flex justify-content-center" style="z-index: 10;">
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link" href="#" aria-label="Previous">
@@ -187,6 +157,9 @@
     </nav>
 
 </div>
+
+<?php seeMore("text-content", "ContentPost");
+?>
 <script>
     let editPost = document.querySelectorAll('.editPost');
     let emailAdmin = document.querySelector('.emailAdmin');

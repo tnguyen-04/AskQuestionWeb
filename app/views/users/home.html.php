@@ -12,6 +12,7 @@ if ($isLogged) {
     $username = $isLogged['username'];
     $email = $isLogged['email'];
 }
+
 ?>
 
 <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #e3b142;">
@@ -27,7 +28,6 @@ if ($isLogged) {
                     <a class="nav-link <?= isset($_GET["action"]) && $_GET["action"] === "askQuestion" ? "active" : "" ?>" href="?module=User&action=askQuestion">Ask Question</a>
                 </li>
             </ul>
-
         </div>
 
         <div class="dropdown me-5">
@@ -63,6 +63,5 @@ autoResizeTextArea("editContent");
 
 autoResizeTextArea("contentPost");
 autoResizeTextArea("emailContent");
-seeMore("text-content", "boxContent");
 layout("footer");
 ?>

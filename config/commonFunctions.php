@@ -19,34 +19,41 @@ function seeMore($textContent, $boxContentByClass)
 {
     echo "<script>
        document.addEventListener('DOMContentLoaded', function() {
-
+           
            let contents = document.querySelectorAll('.' + '$textContent');
-           let boxContents = document.querySelectorAll('.' + '$boxContentByClass'); // Sửa đây
+           let boxContents = document.querySelectorAll('.' + '$boxContentByClass');
        
            contents.forEach(content => {
+               let fullText = content.innerText; 
+               console.log(\"full text:\", fullText);
+               let previewText = fullText.substring(0, 100); 
+               console.log(\"previewText :\", previewText);
+               let restOfText = fullText.substring(100); 
+
+               let htmlContent = previewText;
+               if (restOfText.trim() !== '') {
+                   htmlContent += 
+                       '<span class=\"dots\">...</span>' + 
+                       '<span class=\"more-content\" style=\"display: none;\">' + restOfText + '</span>' +
+                       '<span class=\"moreLink\" style=\"color: #1895ef; cursor: pointer;\"> See more</span>';
+               }
        
-               let fullText = content.innerText;
-               let previewText = fullText.substring(0, 100);
-               let restOfText = fullText.substring(100);
-       
-               content.innerHTML = previewText +
-                   '<span id=\"dots\">...</span>' +
-                   '<span class=\"more-content\" style=\"display: none;\">' + restOfText + '</span>' +
-                   '<span id=\"moreLink\" class=\"more-link\" style=\"color: #1895ef; cursor: pointer; word-break: break-word;\"> See more</span>';
+               content.innerHTML = htmlContent;
        
                boxContents.forEach(boxContent => {
-                   let moreLink = boxContent.querySelector('#moreLink'); // Sửa đây
-                   if (moreLink) {  
+                   let moreLink = boxContent.querySelector('.moreLink'); 
+                   if (moreLink) { 
                        boxContent.addEventListener('click', function() {
-                           console.log('clicked');
                            let moreContent = content.querySelector('.more-content');
-                           let dots = document.getElementById('dots');
-       
+                           let dots = content.querySelector('.dots'); 
+
                            if (moreContent.style.display === 'none') {
+                               console.log(\"clicked show\");
                                moreContent.style.display = 'inline';
                                dots.style.display = 'none';
                                moreLink.style.display = 'none';
                            } else {
+                               console.log(\"clicked hide\");
                                moreContent.style.display = 'none';
                                dots.style.display = 'inline';
                                moreLink.style.display = 'inline';
@@ -58,6 +65,12 @@ function seeMore($textContent, $boxContentByClass)
        });
     </script>";
 }
+
+
+
+
+
+
 function autoResizeTextArea($textareaClass)
 {
     echo "<script>

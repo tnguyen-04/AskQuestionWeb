@@ -41,36 +41,7 @@ if (isPostMethod()) {
         </form>
     </div>
 </div>
-<script>
-    let deletePost = document.querySelectorAll('.deletePost')
-    let popUpFormDelete = document.querySelector('.deleteConfirm')
-    deletePost.forEach(post => {
-        post.addEventListener("click", () => {
-            popUpFormDelete.style.opacity = "1";
-            popUpFormDelete.style.visibility = "visible";
-            popUpFormDelete.style.transition = ".25s";
-            document.body.style.overflowY = "scroll";
-            document.body.style.width = "100%";
 
-        });
-    });
-    closeDelete.forEach(button => {
-        button.addEventListener("click", () => {
-            popUpFormDelete.style.opacity = "0"
-            popUpFormDelete.style.visibility = "hidden"
-            document.body.style.overflow = "auto"
-
-        });
-    });
-    cancelEdit.forEach(button => {
-        button.addEventListener("click", () => {
-            popUpFormEdit.style.opacity = "0"
-            popUpFormEdit.style.visibility = "hidden"
-            document.body.style.overflow = "auto"
-
-        });
-    });
-</script>
 <?php
 layout("footer");
 ?>

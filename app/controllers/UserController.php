@@ -7,16 +7,18 @@ class UserController
     public function home()
     {
         require_once __DIR__ . '/../models/Auth.php';
+        require_once __DIR__ . '/../models/Module.php';
+        $title = "home";
         ob_start();
+        require __DIR__ . '/../views/users/home.html.php';
         require_once __DIR__ . '/../views/users/listAllPosts.html.php';
         $output = ob_get_clean();
-        $title = "home";
-        require_once __DIR__ . '/../views/users/home.html.php';
+        require __DIR__ . '/../views/users/home.html.php';
     }
     public function askQuestion()
     {
         require_once __DIR__ . '/../models/Auth.php';
-        require_once __DIR__ . '/../models/User.php';
+        require_once __DIR__ . '/../models/Module.php';
         $title = "Ask question";
         ob_start();
         require_once __DIR__ . '/../views/users/home.html.php';
