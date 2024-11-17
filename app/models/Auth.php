@@ -54,7 +54,6 @@ class Authentication
             return false;
         }
 
-        // Nếu có dữ liệu, tiếp tục xử lý đăng nhập
         $password = $data['password'];
         $user_id = $data['id'];
         if (password_verify($inputPassword, $password)) {
@@ -169,10 +168,12 @@ class Authentication
 
     function logout()
     {
+
         if (getSession("loginToken")) {
             $loginToken = getSession("loginToken");
             deleteData("sessions", "loginToken = '$loginToken'");
-            deleteSession("loginToken");
+            deleteSession();
+            setcookie(session_name(), '', time() - 3600, '/');
             header("location:?module=Auth&action=login");
         }
     }

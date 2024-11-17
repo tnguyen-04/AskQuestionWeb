@@ -6,6 +6,6 @@ class Module
 {
     function getModules()
     {
-        return selectRows("SELECT id,name FROM modules");
+        return selectRows("SELECT id,moduleName FROM modules");
     }
 }

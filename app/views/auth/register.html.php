@@ -6,8 +6,10 @@ layout("header", "Register");
 if (isPostMethod()) {
     $authentication = new Authentication();
     $result = $authentication->register();
+
     $error = $result['errors'];
-    $userInputArr = $result["userInputArr"];
+    $validUserData = $result["userInputArr"];
+    setFlashData("validData", $validUserData);
     if (empty($error)) {
         $activeToken = sha1(uniqid() . time());
 
@@ -20,6 +22,7 @@ if (isPostMethod()) {
         ];
 
         $insert = insertData("users", $data);
+
         if ($insert) {
             $content = "<div style='text-align: center;'>
                 <h1 style='color:#ffc107; margin:0 auto 30px'>Hello {$userInputArr['username']}</h1>
@@ -31,17 +34,16 @@ if (isPostMethod()) {
             $subject = "Active your accounts";
             sendEmail($userInputArr['email'], $subject, $content);
             setFlashData("msg", "Check your email to complete sign-in!");
-            setFlashData("validData", $userInputArr);
         }
     } else {
         setFlashData("msg", "Please, check your data again");
         setFlashData("errors", $error);
     }
 }
-
 $msg = getFlashData("msg");
 $error = getFlashData("errors");
 $validData = getFlashData("validData");
+
 ?>
 <div class="bgCustom " style="min-width: 100vw;min-height:100vh">
     <div class="container d-flex justify-content-center align-items-center vh-100">

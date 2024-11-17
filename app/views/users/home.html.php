@@ -9,6 +9,7 @@ $email = "";
 $auth = new Authentication();
 $isLogged = $auth->checkLogin();
 if ($isLogged) {
+    $userId = $isLogged['id'];
     $username = $isLogged['username'];
     $email = $isLogged['email'];
 }

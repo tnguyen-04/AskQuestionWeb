@@ -5,7 +5,6 @@ if (!defined('_authorizedAccess') || !_authorizedAccess) {
 function sendMailToAdmin($to, $subject, $emailContent)
 {
 
-
     if (sendEmail($to, $subject, $emailContent)) {
 
         return true;

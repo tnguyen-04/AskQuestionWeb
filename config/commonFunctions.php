@@ -25,9 +25,7 @@ function seeMore($textContent, $boxContentByClass)
        
            contents.forEach(content => {
                let fullText = content.innerText; 
-               console.log(\"full text:\", fullText);
                let previewText = fullText.substring(0, 100); 
-               console.log(\"previewText :\", previewText);
                let restOfText = fullText.substring(100); 
 
                let htmlContent = previewText;
