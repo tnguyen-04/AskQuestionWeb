@@ -41,7 +41,7 @@ if ($isLogged) {
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="logout dropdown-item btn btn-dark w-100 mt-2" href="">Log Out</a></li>
+                <li><button class="logout dropdown-item btn btn-dark w-100 mt-2" href="">Log Out</button></li>
             </ul>
         </div>
     </div>
@@ -53,11 +53,11 @@ if ($isLogged) {
 </main>
 
 <?php
-confirmForm("deleteConfirm", "Do you want to delete the post", "This post will be deleted permanently", "Delete", "?module=User&action=Ok");
-handleDeleteConfirmForm();
 
-confirmForm("logoutForm", "Log out", "Do you want to log out?", "Log out", "?module=Auth&action=logout");
-handleLogoutConfirmForm();
+
+
+
+
 
 autoResizeTextArea("commentPost");
 autoResizeTextArea("editContent");

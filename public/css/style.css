@@ -67,6 +67,7 @@ li.navCommon a.nav-link.active {
     height: 100vh;
     width: 100vw;
     display: none;
+    z-index: 20;
 }
 
 .wrapperCarousel {
@@ -83,12 +84,16 @@ li.navCommon a.nav-link.active {
 .carouselImages {
     display: flex;
     transition: transform 0.5s ease;
+    width: 500px;
+    height: 600px;
 }
 
 .carouselImages img {
-    width: 500px;
-    height: 600px;
-    object-fit: contain;
+    flex-shrink: 0;
+    width: 500px; /* Bắt buộc chiều rộng là 500px */
+    height: 600px; /* Bắt buộc chiều cao là 600px */
+    object-fit: contain; /* Kéo dãn ảnh để lấp đầy khung, bỏ qua tỷ lệ gốc */
+    background-color: #000;
 }
 
 .carouselPrev,
@@ -112,6 +117,7 @@ li.navCommon a.nav-link.active {
     position: absolute;
     top: 70px;
     right: 30px;
+    z-index: 21;
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -165,141 +171,4 @@ li.navCommon a.nav-link.active {
     └── css/
       └── style.css 
 └── vendor/
-    └── autoload.php
-    
-trong PostController.php:
-<?php
-if (!defined('_authorizedAccess') || !_authorizedAccess) {
-    die("Access denied");
-}
-class PostController
-{
-
-    public function postQuestion()
-    { //To get userID
-        require_once __DIR__ . '/../models/Post.php';
-        // header("location: ?module=User&action=askQuestion");
-    }
-}
-
-trong Post.php:
-<?php
-// Kiểm tra quyền truy cập
-if (!defined('_authorizedAccess') || !_authorizedAccess) {
-    die("Access denied");
-}
-
-// Sử dụng API Cloudinary
-use Cloudinary\Api\Upload\UploadApi;
-
-global $conn;
-
-// Kiểm tra phương thức gửi là POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Lưu bài viết vào bảng posts
-    $post_data = [
-        'user_id' => $_POST['user_id'],
-        'module_id' => $_POST['modules'],
-        'content' => $_POST['contentAskQuestion']
-    ];
-
-    // Chèn bài viết vào cơ sở dữ liệu
-    $post_result = insertData('posts', $post_data);
-    $post_id = $conn->lastInsertId();  // Lấy ID của bài viết vừa chèn
-
-    // Kiểm tra có ảnh nào được chọn để upload không
-    if (!empty($_FILES['choosePicture']['name'][0])) {
-        $upload_urls = [];
-
-        // Duyệt qua các file được tải lên
-        foreach ($_FILES['choosePicture']['tmp_name'] as $key => $tmp_name) {
-            if ($_FILES['choosePicture']['error'][$key] != UPLOAD_ERR_OK) {
-                echo "Lỗi tải lên file: " . $_FILES['choosePicture']['error'][$key];
-                return;
-            }
-
-            if (is_uploaded_file($tmp_name)) {
-                try {
-                    // Upload ảnh lên Cloudinary
-                    $uploaded_image = (new UploadApi())->upload($tmp_name, [
-                        'folder' => 'askQuestionUpload'
-                    ]);
-
-                    // Lấy URL ảnh sau khi upload thành công
-                    $image_url = $uploaded_image['secure_url'];
-
-                    // Lưu thông tin ảnh vào cơ sở dữ liệu
-                    $upload_data = [
-                        'post_id' => $post_id,
-                        'user_id' => $_POST['user_id'],
-                        'upload' => $image_url
-                    ];
-
-                    // Chèn thông tin ảnh vào bảng uploads
-                    insertData('uploads', $upload_data);
-
-                    // Lưu URL ảnh vào mảng để kiểm tra
-                    $upload_urls[] = $image_url;
-                } catch (Exception $e) {
-                    echo "Lỗi upload ảnh: " . $e->getMessage();
-                }
-            } else {
-                echo "File không hợp lệ: " . $_FILES['choosePicture']['name'][$key];
-            }
-        }
-
-        // Hiển thị thông báo thành công
-        echo "Bài viết và ảnh đã được đăng thành công!";
-    } else {
-        echo "Không có ảnh nào được tải lên.";
-    }
-} else {
-    echo "Phương thức yêu cầu không hợp lệ.";
-}
- trong askQuestion.html.php
-     <form method="POST" action="?module=Post&action=postQuestion" class="p-5 border border-secondary" style="max-width:498px; border-radius: 15px;">
-         <div class="d-flex justify-content-between mb-3">
-             <p><strong><?= $username ?></strong></p>
-             <input class="btn btn-primary" type="submit" value="Post">
-         </div>
- 
-         <textarea class="contentPost" name="contentAskQuestion" rows="1" cols="50" placeholder="Type your question here" required style="resize: none; overflow: hidden; width: 100%; border: none; border-bottom: 1px solid rgb(108, 117, 125)"></textarea>
- 
-         <input type="hidden" name="user_id" value="<?= $userId ?>">
-         <div class="imagePreview" style="position: relative;margin-top: 20px; display: flex; flex-wrap: wrap; "></div>
-         <input type="file" class="choosePicture" id="choosePicture" name="choosePicture[]" style="display:none;" multiple>
- 
- 
-         <div class="background-carousel" style="display: none;">
-             <div class="closeCarousel"><i class="fa-solid fa-xmark fa-2xl"></i></div>
-             <div class="wrapperCarousel">
-                 <div class="carouselPrev"> &#10094;</div>
-                 <div class="carouselContainer">
-                     <div class="carouselImages">
- 
-                     </div>
-                 </div>
-                 <div class="carouselNext">&#10095;</div>
-             </div>
-         </div>
- 
- 
-         <div class="d-flex justify-content-between align-items-center" style="margin-top: 10px;">
-             <!-- picture -->
-             <label for="choosePicture" style="flex: 1; ">
-                 <i class="fa-regular fa-image"></i> Choose picture
-             </label>
-             <!-- modules -->
- 
-             <select name="modules" class="form-select my-3" style="flex: 1;" required>
-                 <option selected>Select a language</option>
-                 <?php foreach ($modules as $module): ?>
-                     <option value="<?= htmlspecialchars($module['id'], ENT_QUOTES, "UTF-8"); ?>">
-                         <?= htmlspecialchars($module['moduleName'], ENT_QUOTES, "UTF-8"); ?>
-                     </option>
-                 <?php endforeach; ?>
-             </select>
-         </div>
- 
- 
-     </form> tại sao nó lại hiện lỗi Không có ảnh nào được tải lên.là do khi tôi bấm post nó điều hướng sang trang khác làm mất ảnh không
+    └── autoload.php*/

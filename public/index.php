@@ -1,4 +1,6 @@
 <?php
+
+
 // time of session
 $cookieLifetime = 30 * 24 * 60 * 60; // 30 days
 
@@ -15,21 +17,10 @@ session_set_cookie_params([
 require '../vendor/autoload.php';
 
 use Cloudinary\Configuration\Configuration;
-use Cloudinary\Api\Upload\UploadApi;
 
 session_start();
 
-// Cấu hình Cloudinary
-// Configuration::instance([
-//     'cloud' => [
-//         'cloud_name' => 'dipxjgwt3',
-//         'api_key' => '271486631826341',
-//         'api_secret' => 'kL7rCZKr-COH6LadScToW4TNBUM',
-//     ],
-//     'url' => [
-//         'secure' => true 
-//     ]
-// ]);
+
 Configuration::instance('cloudinary://271486631826341:kL7rCZKr-COH6LadScToW4TNBUM@dipxjgwt3?secure=true');
 
 require '../config/config.php';

@@ -172,6 +172,7 @@ class Authentication
         if (getSession("loginToken")) {
             $loginToken = getSession("loginToken");
             deleteData("sessions", "loginToken = '$loginToken'");
+            deleteSession("loginToken");
             deleteSession();
             setcookie(session_name(), '', time() - 3600, '/');
             header("location:?module=Auth&action=login");

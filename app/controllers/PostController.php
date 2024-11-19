@@ -4,12 +4,19 @@ if (!defined('_authorizedAccess') || !_authorizedAccess) {
 }
 class PostController
 {
-
     public function postQuestion()
-    { //To get userID
+    {
         require_once __DIR__ . '/../models/Post.php';
+        $post = new Post();
+        $error = $post->createPost();
+
         header("location: ?module=User&action=askQuestion");
-        setFlashData("success", $error["success"]);
-        setFlashData("error", $error["error"]);
+        if (isset($error['success'])) {
+            setFlashData("successPost", $error['success']);
+        }
+
+        if (isset($error['error'])) {
+            setFlashData("errorPost", $error['error']);
+        }
     }
 }

@@ -8,6 +8,9 @@ class UserController
     {
         require_once __DIR__ . '/../models/Auth.php';
         require_once __DIR__ . '/../models/Module.php';
+        require_once __DIR__ . '/../models/Post.php';
+        $post = new Post();
+        $postDatas = $post->getAllPosts();
         $title = "home";
         ob_start();
         require __DIR__ . '/../views/users/home.html.php';
