@@ -143,6 +143,18 @@ li.navCommon a.nav-link.active {
 .carouselNext:hover {
     background-color: rgb(87, 77, 77); /* Màu nền khi hover */
 }
+.editModule,
+.deleteModule {
+    transition: 0.25s;
+    padding: 10px;
+    opacity: 0.8;
+    cursor: pointer;
+}
+.editModule:hover,
+.deleteModule:hover {
+    opacity: 1;
+    scale: 1.1;
+}
 /* coursework/
 ├── app/
 │   ├── controllers/

@@ -19,4 +19,26 @@ class PostController
             setFlashData("errorPost", $error['error']);
         }
     }
+
+    public function deletePost()
+    {
+        require_once __DIR__ . '/../models/Post.php';
+        $post = new Post();
+        $error = $post->deleteSpecificPost();
+        header("location: ?module=User&action=home");
+        if (isset($error['success'])) {
+            setFlashData("successDeletePost", $error['success']);
+        }
+
+        if (isset($error['error'])) {
+            setFlashData("errorDeletePost", $error['error']);
+        }
+    }
+    public function updatePost()
+    {
+        require_once __DIR__ . '/../models/Post.php';
+        $post = new Post();
+        $error = $post->updateSpecificPost();
+        header("location: ?module=User&action=home");
+    }
 }

@@ -13,7 +13,7 @@ $errorPost = getFlashData("errorPost");
 <div class="container-fluid d-flex justify-content-center" style="margin-top: 120px;">
     <div>
         <?= !empty($successPost) && $successPost !== "" ? "<div class='alert alert-success'>$successPost</div>" : null ?>
-        <?= !empty($errorPost) && $errorPost !== "" ? "<div class='alert-danger'>$errorPost</div>" : null ?>
+        <?= !empty($errorPost) && $errorPost !== "" ? "<div class='alert alert-danger'>$errorPost</div>" : null ?>
         <form enctype="multipart/form-data" method="POST" action="?module=Post&action=postQuestion" class="p-5 border border-secondary" style="max-width:498px; border-radius: 15px;">
             <div class="d-flex justify-content-between mb-3">
                 <p><strong><?= $username ?></strong></p>
@@ -26,7 +26,7 @@ $errorPost = getFlashData("errorPost");
             <div class="imagePreview" style="position: relative;margin-top: 20px; display: flex; flex-wrap: wrap;  overflow: hidden;"></div>
             <input type="file" class="choosePicture" id="choosePicture" name="choosePicture[]" style="display:none;" multiple>
 
-
+            <!-- carousel -->
             <div class="background-carousel" style="display: none;">
                 <div class="closeCarousel"><i class="fa-solid fa-xmark fa-2xl"></i></div>
                 <div class="wrapperCarousel">
@@ -49,7 +49,7 @@ $errorPost = getFlashData("errorPost");
                 <!-- modules -->
 
                 <select name="modules" class="form-select my-3" style="flex: 1;" required>
-                    <option selected>Select a language</option>
+                    <option value="" selected>Select a language</option>
                     <?php foreach ($modules as $module): ?>
                         <option value="<?= htmlspecialchars($module['id'], ENT_QUOTES, "UTF-8"); ?>">
                             <?= htmlspecialchars($module['moduleName'], ENT_QUOTES, "UTF-8"); ?>
@@ -74,7 +74,6 @@ handleLogoutConfirmForm();
         const preview = document.querySelector('.imagePreview');
         const carouselImages = document.querySelector('.carouselImages');
 
-        // Mảng để lưu các ảnh đã chọn (dùng chung cho cả preview và carousel)
         const imageArray = [];
 
         preview.innerHTML = '';
