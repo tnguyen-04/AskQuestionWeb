@@ -64,9 +64,6 @@ function seeMore($textContent, $boxContentByClass)
     </script>";
 }
 
-
-
-
 function autoResizeTextArea($textareaClass)
 {
     echo "<script>
@@ -314,9 +311,7 @@ function sendEmail($to, $subject, $content)
 
 function validateUserInput($userInputArr)
 {
-    $errorInput = []; // Khai báo mảng lỗi tại đầu hàm
-
-    // Kiểm tra username
+    $errorInput = [];
     if (isset($userInputArr["username"])) {
         if (empty($userInputArr["username"])) {
             $errorInput["username"]["require"] = "Required username";
@@ -325,7 +320,7 @@ function validateUserInput($userInputArr)
         }
     }
 
-    // Kiểm tra email
+
     if (isset($userInputArr["email"])) {
         if (empty($userInputArr["email"])) {
             $errorInput["email"]["require"] = "Required email";
@@ -340,7 +335,6 @@ function validateUserInput($userInputArr)
         }
     }
 
-    // Kiểm tra password
     if (isset($userInputArr["password"])) {
         if (empty($userInputArr["password"])) {
             $errorInput["password"]["require"] = "Required password";

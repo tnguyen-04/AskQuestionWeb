@@ -47,7 +47,7 @@ $errorDeletePost = getFlashData("errorDeletePost");
 
             <!-- content -->
             <div class="ContentPost mx-3">
-                <p class="text-content" style="overflow-wrap: break-word">
+                <p class="textContent" style="overflow-wrap: break-word">
                     <?= $postData['content'] ?>
                 </p>
             </div>
@@ -237,6 +237,68 @@ confirmForm("logoutForm", "Log out", "Do you want to log out?", "Log out", "?mod
 handleLogoutConfirmForm();
 ?>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let contents = document.querySelectorAll('.textContent');
+        let boxContents = document.querySelectorAll('.ContentPost');
+
+        let isSelecting = false;
+
+        document.addEventListener('mousedown', () => {
+            isSelecting = false;
+        });
+        document.addEventListener('mousemove', () => {
+            isSelecting = true;
+        });
+
+        contents.forEach((content, index) => {
+            let fullText = content.innerText;
+            let previewText = fullText.substring(0, 100);
+            let restOfText = fullText.substring(100);
+            let htmlContent = previewText;
+
+            if (restOfText.trim() !== '') {
+                htmlContent += `
+                 <span class="dots">...</span>
+                 <span class="more-content" style="display: none;">${restOfText}</span>
+                 <span class="moreLink" style="color: #1895ef; cursor: pointer;"> See more</span>
+             `;
+            }
+
+            content.innerHTML = htmlContent;
+
+            let boxContent = boxContents[index];
+            if (boxContent) {
+                let moreLink = boxContent.querySelector('.moreLink');
+                if (moreLink) {
+                    boxContent.addEventListener('click', function() {
+                        if (isSelecting) return;
+
+                        let moreContent = content.querySelector('.more-content');
+                        let dots = content.querySelector('.dots');
+
+                        if (moreContent && dots) {
+                            if (moreContent.style.display === 'none') {
+                                moreContent.style.display = 'inline';
+                                dots.style.display = 'none';
+                                moreLink.style.display = 'none';
+                            } else {
+                                moreContent.style.display = 'none';
+                                dots.style.display = 'inline';
+                                moreLink.style.display = 'inline';
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+
+    });
+
+
+
+
+
     const carouselImages = document.querySelector('.carouselImages');
     const deletePosts = document.querySelectorAll('.deletePost');
 

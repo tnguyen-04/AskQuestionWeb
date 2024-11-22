@@ -25,7 +25,7 @@ class PostController
         require_once __DIR__ . '/../models/Post.php';
         $post = new Post();
         $error = $post->deleteSpecificPost();
-        $action = $_GET['action'];
+
         header("location: ?module=User&action=home");
         if (isset($error['success'])) {
             setFlashData("successDeletePost", $error['success']);

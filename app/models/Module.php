@@ -72,7 +72,7 @@ class Module
             $deleteRelatedPosts = selectRows($sql);
 
             if (empty($deleteRelatedPosts)) {
-                $response['error'] = "no images  $moduleID ";
+                $response['error'] = "no data  $moduleID ";
                 return $response;
             }
             foreach ($deleteRelatedPosts as $deleteRelatedPost) {

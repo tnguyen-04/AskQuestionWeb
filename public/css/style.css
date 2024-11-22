@@ -155,6 +155,13 @@ li.navCommon a.nav-link.active {
     opacity: 1;
     scale: 1.1;
 }
+.textContent::selection,
+.more-content::selection,
+.ContentPost::selection {
+    background-color: #e3b142;
+    color: #fff;
+}
+
 /* coursework/
 ├── app/
 │   ├── controllers/

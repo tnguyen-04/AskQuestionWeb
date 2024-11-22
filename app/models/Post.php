@@ -26,12 +26,15 @@ class Post
                 'content' => $_POST['contentAskQuestion']
             ];
 
-            insertData('posts', $post_data);
-            // Lấy ID của bài viết vừa tạo
+            $insert = insertData('posts', $post_data);
+            if (!$insert) {
+                $error['success'] = "Posted successfully";
+            }
+
             $post_id = $conn->lastInsertId();
 
             if (!empty($_FILES['choosePicture']['name'][0])) {
-                $upload_urls = []; // Mảng chứa các URL ảnh
+                $upload_urls = [];
 
                 foreach ($_FILES['choosePicture']['tmp_name'] as $key => $tmp_name) {
                     if ($_FILES['choosePicture']['error'][$key] != UPLOAD_ERR_OK) {
@@ -41,7 +44,6 @@ class Post
 
                     if (is_uploaded_file($tmp_name)) {
                         try {
-                            // Upload ảnh lên Cloudinary
                             $uploaded_image = (new UploadApi())->upload($tmp_name, [
                                 'folder' => 'askQuestionUpload'
                             ]);
@@ -67,12 +69,11 @@ class Post
                 ];
 
                 insertData('uploads', $upload_data);
-
-                $error['success'] = "Posted successfully";
             }
         } else {
             $error['error'] = "Invalid method.";
         }
+        $error['success'] = "Posted successfully";
 
         return $error;
     }

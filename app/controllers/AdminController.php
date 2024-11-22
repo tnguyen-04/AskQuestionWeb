@@ -8,8 +8,6 @@ class AdminController
     {
         require_once __DIR__ . '/../models/Auth.php';
         require_once __DIR__ . '/../models/User.php';
-        $userList = new User();
-        $allUsers = $userList->getAllUsers();
         ob_start();
         require_once __DIR__ . '/../views/admin/listAllUsers.html.php';
         $output = ob_get_clean();
@@ -23,6 +21,36 @@ class AdminController
         $allUsers = $userList->editUserName();
         header("location: ?module=Admin&action=user");
     }
+    public function deletePostOfUser()
+    {
+        require_once __DIR__ . '/../models/Post.php';
+        $post = new Post();
+        $error = $post->deleteSpecificPost();
+        $userID = $_POST['user_id'];
+        header("location:?module=Admin&action=showUserPost&userId=$userID");
+        if (isset($error['success'])) {
+            setFlashData("successDeletePost", $error['success']);
+        }
+
+        if (isset($error['error'])) {
+            setFlashData("errorDeletePost", $error['error']);
+        }
+    }
+    public function deleteUser()
+    {
+        require_once __DIR__ . '/../models/User.php';
+        $user = new User();
+        $response = $user->deleteSpecificUser();
+        header("location:?module=Admin&action=user");
+        if (isset($response['success'])) {
+            setFlashData("successDeletePost", $response['success']);
+        }
+
+        if (isset($response['error'])) {
+            setFlashData("errorDeletePost", $response['error']);
+        }
+    }
+
     public function showUserPost()
     {
         require_once __DIR__ . '/../models/Auth.php';

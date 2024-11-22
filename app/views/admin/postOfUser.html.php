@@ -4,9 +4,14 @@ if (!defined('_authorizedAccess') || !_authorizedAccess) {
 }
 $userList = new User();
 $userPosts = $userList->showUserPosts();
+$successDeletePost = getFlashData("successDeletePost");
+$errorDeletePost = getFlashData("errorDeletePost");
 
 ?>
 <div class="content" style="width: 420px;padding-top: 100px; margin: 0px auto 60px;">
+    <?= !empty($successDeletePost) && $successDeletePost !== "" ? "<div class='alert alert-success'>$successDeletePost</div>" : null ?>
+    <?= !empty($errorDeletePost) && $errorDeletePost !== "" ? "<div class='alert alert-danger'>$errorDeletePost</div>" : null ?>
+
     <?php foreach ($userPosts as $userPost): ?>
         <div class="border border-1 border-secondary overflow-hidden mb-5" style="background-color: #fff;">
             <!-- information -->
@@ -29,7 +34,7 @@ $userPosts = $userList->showUserPosts();
 
             <!-- content -->
             <div class="ContentPost mx-3">
-                <p class="text-content" style="overflow-wrap: break-word">
+                <p class="textContent" style="overflow-wrap: break-word">
                     <?= $userPost['content'] ?>
                 </p>
             </div>
@@ -75,9 +80,10 @@ $userPosts = $userList->showUserPosts();
 
             <!-- delete Post -->
             <div class="popUpFormDelete-<?= $userPost['post_id'] ?> modal-type" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9; opacity: 0; visibility: hidden;">
-                <form action="?module=Post&action=deletePost" method="POST" class="border border-dark rounded py-2" style="width: 380px; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff;">
+                <form action="?module=Admin&action=deletePostOfUser" method="POST" class="border border-dark rounded py-2" style="width: 380px; position: absolute; z-index: 10; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff;">
                     <div>
                         <input type="hidden" name="post_id" value="<?= $userPost['post_id'] ?>">
+                        <input type="hidden" name="user_id" value="<?= $userPost['user_id'] ?>">
                         <div class="popUpHeader d-flex align-items-center justify-content-between">
                             <h5 class="modal-title ms-4">Do you want to delete the post</h5>
                             <button type="button" class="popUpClose me-4" style="all: unset; scale: 1.5; cursor: pointer;">
@@ -103,6 +109,67 @@ $userPosts = $userList->showUserPosts();
 
 </div>
 <script>
+    // See more
+    document.addEventListener('DOMContentLoaded', function() {
+        let contents = document.querySelectorAll('.textContent');
+        let boxContents = document.querySelectorAll('.ContentPost');
+
+        let isSelecting = false;
+
+        document.addEventListener('mousedown', () => {
+            isSelecting = false;
+        });
+        document.addEventListener('mousemove', () => {
+            isSelecting = true;
+        });
+
+        contents.forEach((content, index) => {
+            let fullText = content.innerText;
+            let previewText = fullText.substring(0, 100);
+            let restOfText = fullText.substring(100);
+            let htmlContent = previewText;
+
+            if (restOfText.trim() !== '') {
+                htmlContent += `
+                 <span class="dots">...</span>
+                 <span class="more-content" style="display: none;">${restOfText}</span>
+                 <span class="moreLink" style="color: #1895ef; cursor: pointer;"> See more</span>
+             `;
+            }
+
+            content.innerHTML = htmlContent;
+
+            let boxContent = boxContents[index];
+            if (boxContent) {
+                let moreLink = boxContent.querySelector('.moreLink');
+                if (moreLink) {
+                    boxContent.addEventListener('click', function() {
+                        if (isSelecting) return;
+
+                        let moreContent = content.querySelector('.more-content');
+                        let dots = content.querySelector('.dots');
+
+                        if (moreContent && dots) {
+                            if (moreContent.style.display === 'none') {
+                                moreContent.style.display = 'inline';
+                                dots.style.display = 'none';
+                                moreLink.style.display = 'none';
+                            } else {
+                                moreContent.style.display = 'none';
+                                dots.style.display = 'inline';
+                                moreLink.style.display = 'inline';
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+
+
+
+
     const deletePosts = document.querySelectorAll('.deletePost');
 
 

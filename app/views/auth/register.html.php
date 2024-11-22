@@ -12,29 +12,29 @@ if (isPostMethod()) {
     setFlashData("validData", $validUserData);
     if (empty($error)) {
         $activeToken = sha1(uniqid() . time());
-
         $data = [
-            "username" => $userInputArr['username'],
-            "email" => $userInputArr['email'],
-            "password" => password_hash($userInputArr['password'], PASSWORD_DEFAULT),
+            "username" => $validUserData['username'],
+            "email" => $validUserData['email'],
+            "password" => password_hash($validUserData['password'], PASSWORD_DEFAULT),
             'activeToken' => $activeToken,
             'role' => '2'
         ];
 
         $insert = insertData("users", $data);
+        if (!$insert) {
+            setFlashData("msg", "cannot insert data");
+        }
 
-        if ($insert) {
-            $content = "<div style='text-align: center;'>
-                <h1 style='color:#ffc107; margin:0 auto 30px'>Hello {$userInputArr['username']}</h1>
+        $content = "<div style='text-align: center;'>
+                <h1 style='color:#ffc107; margin:0 auto 30px'>Hello {$validUserData['username']}</h1>
                 <p style='margin:0 auto 30px'>We want to verify your account email, so click the button below to activate your account.</p>
                 <div style='display: inline-block; text-align: center;'>
                     <a href='http://localhost/phpExercises/coursework/public/?module=Auth&action=activeToken&activeToken=$activeToken' style='display: inline-block; padding: 15px 30px; background-color: black; color: white; text-decoration: none; font-weight: bold; border-radius: 5px;'>Click here</a>
                 </div>
             </div>";
-            $subject = "Active your accounts";
-            sendEmail($userInputArr['email'], $subject, $content);
-            setFlashData("msg", "Check your email to complete sign-in!");
-        }
+        $subject = "Active your accounts";
+        sendEmail($validUserData['email'], $subject, $content);
+        setFlashData("msg", "Check your email to complete sign-in!");
     } else {
         setFlashData("msg", "Please, check your data again");
         setFlashData("errors", $error);
