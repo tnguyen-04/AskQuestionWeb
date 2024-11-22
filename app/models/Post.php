@@ -121,51 +121,34 @@ class Post
 
             $post_id = $_POST['post_id'];
 
-            // Lấy danh sách các hình ảnh cần xóa từ database
             $uploadData = selectOneRow("SELECT upload FROM uploads WHERE post_id = $post_id");
 
-            if (empty($uploadData) || empty($uploadData['upload'])) {
-                $response['error'] = "No images found for the given post ID.";
-                return $response;
-            }
 
-            // Tách danh sách URL ảnh từ chuỗi
-            $imageUrls = explode(',', $uploadData['upload']);
+            $imageUrls = !empty($uploadData['upload']) ? explode(',', $uploadData['upload']) : [];
             $publicIds = [];
-
-            foreach ($imageUrls as $url) {
-                // Tách public_id từ URL
-                preg_match('/\/v(\d+)\/(.*?)\.(jpg|jpeg|png|gif)/', $url, $matches);
-                if (isset($matches[2])) {
-                    $publicIds[] = $matches[2];
-                }
-            }
-
-            // Kiểm tra xem có public_id nào không
-            if (empty($publicIds)) {
-                $response['error'] = "No valid public_ids found for deletion.";
-                return $response;
-            }
-
-            try {
-                // Sử dụng AdminApi để xóa ảnh
-                $adminApi = new AdminApi();
-                $result = $adminApi->deleteAssets($publicIds); // Chuyển mảng public_ids vào
-
-                // Kiểm tra kết quả xóa
-                foreach ($publicIds as $publicId) {
-                    if (isset($result['deleted'][$publicId]) && $result['deleted'][$publicId] === 'deleted') {
-                        echo "Đã xóa ảnh: " . $publicId . "\n";
-                    } else {
-                        echo "Không thể xóa ảnh: " . $publicId . "\n";
+            if ($imageUrls != []) {
+                foreach ($imageUrls as $url) {
+                    preg_match('/\/v(\d+)\/(.*?)\.(jpg|jpeg|png|gif)/', $url, $matches);
+                    if (isset($matches[2])) {
+                        $publicIds[] = $matches[2];
                     }
                 }
-            } catch (Exception $e) {
-                $response['error'] = "Error deleting images: " . $e->getMessage();
-                return $response;
+
+                if (empty($publicIds)) {
+                    $response['error'] = "No valid public_ids found for deletion.";
+                    return $response;
+                }
+
+                try {
+                    $adminApi = new AdminApi();
+                    $result = $adminApi->deleteAssets($publicIds);
+                } catch (Exception $e) {
+                    $response['error'] = "Error deleting images: " . $e->getMessage();
+                    return $response;
+                }
             }
 
-            // Delete the post and image data from the database
+
             deleteData("posts", "id = $post_id");
             deleteData("uploads", "post_id = $post_id");
 
@@ -218,9 +201,9 @@ class Post
 
                 foreach ($publicIds as $publicId) {
                     if (isset($result['deleted'][$publicId]) && $result['deleted'][$publicId] === 'deleted') {
-                        echo "Đã xóa ảnh: " . $publicId . "\n";
+                        echo "Deleted: " . $publicId . "\n";
                     } else {
-                        echo "Không thể xóa ảnh: " . $publicId . "\n";
+                        echo "Cannot delete: " . $publicId . "\n";
                     }
                 }
             } catch (Exception $e) {

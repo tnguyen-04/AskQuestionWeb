@@ -28,7 +28,7 @@ $auth->checkLogin();
                 <span class="navbar-toggler-icon"></span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink" style="width: 200px; border: 1px solid black;">
-                <li><a class="dropdown-item" href="?module=Admin&action=users">User</a></li>
+                <li><a class="dropdown-item" href="?module=Admin&action=user">User</a></li>
                 <li><a class="dropdown-item" href="?module=Admin&action=category">Category</a></li>
                 <li>
                     <hr class="dropdown-divider">

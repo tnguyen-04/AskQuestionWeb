@@ -12,6 +12,10 @@ if ($isLogged) {
     $userId = $isLogged['id'];
     $username = $isLogged['username'];
     $email = $isLogged['email'];
+    $role = $isLogged['role'];
+    if ($role == 1) {
+        header("location: ?module=Admin&action=user");
+    }
 }
 
 ?>

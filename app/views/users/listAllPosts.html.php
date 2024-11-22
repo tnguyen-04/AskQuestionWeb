@@ -53,7 +53,7 @@ $errorDeletePost = getFlashData("errorDeletePost");
             </div>
 
             <!-- Images -->
-            <div class="postImageContainer d-flex" data-post-id="<?= $postData['id'] ?>" style="flex-wrap: wrap;">
+            <div class="postImageContainer d-flex" data-post-id="<?= $postData['id'] ?>" style="flex-wrap: wrap;cursor: pointer;">
                 <?php
                 $images = explode(',', $postData['upload']);
                 if (!empty($images) && $images[0] !== '') {
@@ -181,7 +181,6 @@ $errorDeletePost = getFlashData("errorDeletePost");
 
     <?php endforeach; ?>
 
-
     <!-- email -->
 
     <div class="emailAdmin position-fixed border border-2 border-dark rounded-circle d-flex justify-content-center align-items-center" style="bottom: 30px; right: 30px; height: 40px; width: 40px;">
@@ -211,23 +210,23 @@ $errorDeletePost = getFlashData("errorDeletePost");
 
 
     <!-- pagination -->
-    <nav class="d-flex justify-content-center" style="z-index: 10;">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <!-- <nav class="d-flex justify-content-center" style="z-index: 10;">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav> -->
 
 </div>
 
@@ -322,7 +321,7 @@ handleLogoutConfirmForm();
                     }
                 }
 
-                // Thêm lớp phủ cho ảnh thứ 4
+                // add overlay
                 if (index === 3 && imageArray.length > maxPreview) {
                     const overlayContainer = document.createElement('div');
                     overlayContainer.style.position = 'relative';
@@ -407,7 +406,7 @@ handleLogoutConfirmForm();
         });
     })
 
-
+    // show image in home page
     document.addEventListener('DOMContentLoaded', () => {
         const postImageContainers = document.querySelectorAll('.postImageContainer');
         const carousels = document.querySelectorAll('.background-carousel');
@@ -527,7 +526,7 @@ handleLogoutConfirmForm();
 
 
 
-    // ==============================================================================
+    // email===========================================================================
 
 
     let emailAdmin = document.querySelector('.emailAdmin');

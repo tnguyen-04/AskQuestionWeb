@@ -67,8 +67,6 @@ function seeMore($textContent, $boxContentByClass)
 
 
 
-
-
 function autoResizeTextArea($textareaClass)
 {
     echo "<script>

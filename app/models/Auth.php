@@ -150,7 +150,7 @@ class Authentication
     {
         if (getSession("loginToken")) {
             $loginToken = getSession("loginToken");
-            $sql = "SELECT users.id, users.username, users.email
+            $sql = "SELECT users.id, users.username, users.email,users.role
                 FROM users
                 INNER JOIN sessions ON users.id = sessions.user_id
                 WHERE sessions.loginToken = '$loginToken' ";
@@ -168,7 +168,6 @@ class Authentication
 
     function logout()
     {
-
         if (getSession("loginToken")) {
             $loginToken = getSession("loginToken");
             deleteData("sessions", "loginToken = '$loginToken'");
