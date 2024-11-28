@@ -67,7 +67,7 @@ $errorDeletePost = getFlashData("errorDeletePost");
                     <hr>
 
                     <div class="popUpBody ms-4">
-                        <p>This user will be deleted permanently.<?= $user['username'] ?></p>
+                        <p><strong><?= $user['username'] ?></strong> user will be deleted permanently.</p>
                     </div>
 
                     <hr>

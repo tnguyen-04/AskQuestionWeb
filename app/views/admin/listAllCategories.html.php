@@ -76,7 +76,7 @@ $errorAddModule = getFlashData('errorAddModule');
                 </div>
                 <hr>
                 <div class="popUpBody ms-4">
-                    <p>This module will be deleted permanently.<?= $module['id'] ?></p>
+                    <p><strong><?= $module['moduleName'] ?></strong> module will be deleted permanently.</p>
                 </div>
                 <hr>
                 <div class="popUpFooter d-flex justify-content-end align-items-center gap-3 me-3">
