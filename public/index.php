@@ -1,6 +1,4 @@
 <?php
-
-
 // time of session
 $cookieLifetime = 30 * 24 * 60 * 60; // 30 days
 

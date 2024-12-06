@@ -1,5 +1,5 @@
 <?php
-define('BASE_URL', 'http://localhost/phpExercises/coursework/public/');
+define('BASE_URL', 'http://localhost/COMP1841/coursework/public/');
 const SERVERNAME = "localhost";
 const USERNAME = "root";
 const PASSWORD = "";

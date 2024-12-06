@@ -17,7 +17,7 @@ $auth->checkLogin();
                     <a class="nav-link <?= (isset($_GET["action"]) && $_GET["action"] === "user") ? "active" : "" ?>" href="?module=Admin&action=user">User</a>
                 </li>
                 <li class="navCommon nav-item">
-                    <a class="nav-link <?= isset($_GET["action"]) && $_GET["action"] === "category" ? "active" : "" ?>" href="?module=Admin&action=category">Category</a>
+                    <a class="nav-link <?= isset($_GET["action"]) && $_GET["action"] === "category" ? "active" : "" ?>" href="?module=Admin&action=category">Module</a>
                 </li>
             </ul>
 
@@ -29,7 +29,7 @@ $auth->checkLogin();
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink" style="width: 200px; border: 1px solid black;">
                 <li><a class="dropdown-item" href="?module=Admin&action=user">User</a></li>
-                <li><a class="dropdown-item" href="?module=Admin&action=category">Category</a></li>
+                <li><a class="dropdown-item" href="?module=Admin&action=category">Module</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>

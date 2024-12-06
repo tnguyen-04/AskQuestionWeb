@@ -223,7 +223,7 @@ class Post
 
                     if (is_uploaded_file($tmp_name)) {
                         try {
-                            // Upload ảnh lên Cloudinary
+
                             $uploaded_image = (new UploadApi())->upload($tmp_name, [
                                 'folder' => 'askQuestionUpload'
                             ]);
