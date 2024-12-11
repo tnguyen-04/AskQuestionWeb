@@ -47,7 +47,6 @@ $errorPost = getFlashData("errorPost");
                     <i class="fa-regular fa-image"></i> Choose picture
                 </label>
                 <!-- modules -->
-
                 <select name="modules" class="form-select my-3" style="flex: 1;" required>
                     <option value="" selected>Select a language</option>
                     <?php foreach ($modules as $module): ?>
@@ -85,7 +84,7 @@ handleLogoutConfirmForm();
         for (let i = 0; i < fileCount; i++) {
             const file = files[i];
 
-            if (file.size <= 3 * 1024 * 1024) { // 3MB
+            if (file.size <= 5 * 1024 * 1024) { // 3MB
                 imageArray.push(file);
             } else {
                 alert('File must be smaller than 4MB.');
@@ -96,16 +95,17 @@ handleLogoutConfirmForm();
             const img = document.createElement('img');
             const objectURL = URL.createObjectURL(file);
             img.src = objectURL;
+            img.style.objectFit = 'cover';
 
             if (imageArray.length === 1) {
-                img.style.width = '400px';
+                img.style.width = '399px';
                 img.style.height = '400px';
             } else if (imageArray.length === 2) {
-                img.style.width = '400px';
+                img.style.width = '399px';
                 img.style.height = '200px';
             } else if (imageArray.length === 3) {
                 if (index === 0) {
-                    img.style.width = '400px';
+                    img.style.width = '399px';
                     img.style.height = '200px';
                 } else {
                     img.style.width = '200px';
@@ -113,7 +113,7 @@ handleLogoutConfirmForm();
                 }
             } else if (imageArray.length >= 4) {
                 if (index === 0) {
-                    img.style.width = '450px';
+                    img.style.width = '399px';
                     img.style.height = '225px';
                 } else {
                     img.style.width = '133px';
@@ -121,7 +121,7 @@ handleLogoutConfirmForm();
                 }
             }
 
-            // Thêm lớp phủ cho ảnh thứ 4
+
             if (index === 3 && imageArray.length > maxPreview) {
                 const overlayContainer = document.createElement('div');
                 overlayContainer.style.position = 'relative';

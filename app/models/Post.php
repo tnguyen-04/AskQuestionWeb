@@ -173,11 +173,9 @@ class Post
 
             updateData('posts', $post_data, "id = '$post_id'");
 
-
             // delete old images =====================================
             // Retrieve the list of images to delete from the database
             $uploadData = selectOneRow("SELECT upload FROM uploads WHERE post_id = $post_id");
-
             if (empty($uploadData) || empty($uploadData['upload'])) {
                 return;
             }
