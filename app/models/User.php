@@ -112,7 +112,7 @@ class User
             }
             $deleteNow = deleteData("users", "id = $userID");
             if (!$deleteNow) {
-                $response['error'] = "CANNOT DELETE IN DATABASE";
+                $response['error'] = "Can't not delete in database";
                 return $response;
             }
         }

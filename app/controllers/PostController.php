@@ -10,14 +10,13 @@ class PostController
         $post = new Post();
         $error = $post->createPost();
 
-        header("location: ?module=User&action=askQuestion");
         if (isset($error['success'])) {
             setFlashData("successPost", $error['success']);
         }
-
         if (isset($error['error'])) {
             setFlashData("errorPost", $error['error']);
         }
+        header("location: ?module=User&action=home");
     }
 
     public function deletePost()

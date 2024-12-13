@@ -8,16 +8,16 @@ $getModule = new Module();
 $modules = $getModule->getModules();
 $successDeletePost = getFlashData("successDeletePost");
 $errorDeletePost = getFlashData("errorDeletePost");
-
-
-
+$successPost = getFlashData("successPost");
+$errorPost = getFlashData("errorPost");
 ?>
 
 
 <div class="content" style="width: 420px;padding-top: 100px; margin: 0px auto 60px;">
     <?= !empty($successDeletePost) && $successDeletePost !== "" ? "<div class='alert alert-success'>$successDeletePost</div>" : null ?>
     <?= !empty($errorDeletePost) && $errorDeletePost !== "" ? "<div class='alert alert-danger'>$errorDeletePost</div>" : null ?>
-
+    <?= !empty($successPost) && $successPost !== "" ? "<div class='alert alert-success'>$successPost</div>" : null ?>
+    <?= !empty($errorPost) && $errorPost !== "" ? "<div class='alert alert-danger'>$errorPost</div>" : null ?>
 
 
     <?php foreach ($postDatas as $postData): ?>
@@ -291,13 +291,7 @@ handleLogoutConfirmForm();
                 }
             }
         });
-
-
     });
-
-
-
-
 
     const carouselImages = document.querySelector('.carouselImages');
     const deletePosts = document.querySelectorAll('.deletePost');
@@ -328,7 +322,7 @@ handleLogoutConfirmForm();
 
         });
     })
-
+    //edit post =========================================================
     const editPosts = document.querySelectorAll('.editPost');
     editPosts.forEach(editPost => {
         document.querySelector('.choosePicture').addEventListener('change', function(e) {
@@ -346,7 +340,6 @@ handleLogoutConfirmForm();
 
             for (let i = 0; i < fileCount; i++) {
                 const file = files[i];
-
                 if (file.size <= 3 * 1024 * 1024) { // 3MB
                     imageArray.push(file);
                 } else {
@@ -551,32 +544,25 @@ handleLogoutConfirmForm();
                 imgOfPost[3].style.width = '140px';
                 imgOfPost[3].style.height = '200px';
 
-                // Tạo container và overlay nếu có trên 4 ảnh
                 const container = document.createElement('div');
                 container.style.position = 'relative';
                 container.style.width = '140px';
                 container.style.height = '200px';
 
-                // Đảm bảo ảnh thứ 4 được thêm vào container
                 container.appendChild(imgOfPost[3]);
-
-                // Kiểm tra nếu có nhiều hơn 4 ảnh, tạo lớp phủ
                 if (numberOfImg > maxDisplay) {
                     const overlay = document.createElement('div');
                     overlay.classList.add('overFiveImages');
                     overlay.textContent = `+${numberOfImg - maxDisplay}`;
                     container.appendChild(overlay);
 
-                    // Ẩn các ảnh thừa
                     for (let i = maxDisplay; i < numberOfImg; i++) {
                         imgOfPost[i].style.display = 'none';
                     }
                 }
 
-                // Đảm bảo container được thêm vào postImageContainer
                 postImageContainer.appendChild(container);
 
-                // Đảm bảo các ảnh sau ảnh thứ 4 được ẩn hoặc hiển thị tùy theo điều kiện
                 for (let i = maxDisplay; i < numberOfImg; i++) {
                     imgOfPost[i].style.display = 'none';
                 }
@@ -589,8 +575,6 @@ handleLogoutConfirmForm();
 
 
     // email===========================================================================
-
-
     let emailAdmin = document.querySelector('.emailAdmin');
     let emailAdminDisplay = document.querySelector('.emailAdminDisplay');
 

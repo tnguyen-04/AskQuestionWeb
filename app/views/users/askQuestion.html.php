@@ -6,14 +6,10 @@ if (!defined('_authorizedAccess') || !_authorizedAccess) {
 
 $module = new Module();
 $modules = $module->getModules();
-$successPost = getFlashData("successPost");
-$errorPost = getFlashData("errorPost");
 
 ?>
 <div class="container-fluid d-flex justify-content-center" style="margin-top: 120px;">
     <div>
-        <?= !empty($successPost) && $successPost !== "" ? "<div class='alert alert-success'>$successPost</div>" : null ?>
-        <?= !empty($errorPost) && $errorPost !== "" ? "<div class='alert alert-danger'>$errorPost</div>" : null ?>
         <form enctype="multipart/form-data" method="POST" action="?module=Post&action=postQuestion" class="p-5 border border-secondary" style="max-width:498px; border-radius: 15px;">
             <div class="d-flex justify-content-between mb-3">
                 <p><strong><?= $username ?></strong></p>
@@ -137,10 +133,8 @@ handleLogoutConfirmForm();
                 preview.appendChild(overlayContainer);
                 return;
             }
-
             preview.appendChild(img);
         });
-
 
         imageArray.forEach((file) => {
             const imgCarousel = document.createElement('img');

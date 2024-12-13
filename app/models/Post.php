@@ -102,8 +102,6 @@ class Post
             posts.id
         ORDER BY 
             posts.created_at DESC;
-        
-        
         ";
         $data = selectRows($sql);
         return $data;
